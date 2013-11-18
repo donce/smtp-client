@@ -40,8 +40,8 @@ string base64(string raw) {
     int output_length = 4 * ((raw.length() + 2) / 3);
 
     char *encoded_raw = (char*)malloc(output_length+1);
+    if (encoded_raw == NULL) return "";
 	encoded_raw[output_length] = 0;
-    if (encoded_raw == NULL) return NULL;
 
     for (int i = 0, j = 0; i < raw.length();) {
         uint32_t octet_a = i < raw.length() ? raw[i++] : 0;
@@ -59,7 +59,7 @@ string base64(string raw) {
     for (int i = 0; i < mod_table[raw.length() % 3]; i++)
         encoded_raw[output_length - 1 - i] = '=';
 
-	string s = string(encoded_raw);
+	string s(encoded_raw);
 	free(encoded_raw);
     return s;
 }
