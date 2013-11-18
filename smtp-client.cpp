@@ -39,7 +39,8 @@ static int mod_table[] = {0, 2, 1};
 string base64(string raw) {
     int output_length = 4 * ((raw.length() + 2) / 3);
 
-    char *encoded_raw = (char*)malloc(raw.length());
+    char *encoded_raw = (char*)malloc(output_length+1);
+	encoded_raw[output_length] = 0;
     if (encoded_raw == NULL) return NULL;
 
     for (int i = 0, j = 0; i < raw.length();) {
@@ -58,7 +59,9 @@ string base64(string raw) {
     for (int i = 0; i < mod_table[raw.length() % 3]; i++)
         encoded_raw[output_length - 1 - i] = '=';
 
-    return encoded_raw;
+	string s = string(encoded_raw);
+	free(encoded_raw);
+    return s;
 }
 
 char buffer[BUFFER_SIZE];
